@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>开元棋牌 · 知识库入口</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", sans-serif;
+      background: linear-gradient(145deg, #fef5ea 0%, #fbe9d7 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.2rem;
+      color: #3d2e1e;
+    }
+
+    .page-wrapper {
+      max-width: 1120px;
+      width: 100%;
+    }
+
+    /* 暖色卡片通用 */
+    .card {
+      background: #fffffffa;
+      backdrop-filter: blur(3px);
+      border-radius: 32px;
+      padding: 2.2rem 2.6rem;
+      box-shadow: 0 10px 25px rgba(180, 120, 60, 0.10),
+                  0 0 0 1px rgba(230, 190, 150, 0.25);
+      transition: box-shadow 0.2s;
+    }
+
+    .card + .card {
+      margin-top: 1.8rem;
+    }
+
+    /* 版面基础 */
+    h1 {
+      font-size: 2.6rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #452f1a;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      font-weight: 500;
+      color: #4f3621;
+      margin-bottom: 1.2rem;
+      position: relative;
+      padding-left: 1rem;
+    }
+
+    h2::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.25em;
+      width: 6px;
+      height: 1.2em;
+      background: #dbb386;
+      border-radius: 12px;
+    }
+
+    h3 {
+      font-weight: 500;
+      font-size: 1.2rem;
+      color: #593f2a;
+      margin: 0 0 0.4rem 0;
+    }
+
+    p {
+      line-height: 1.7;
+      margin-bottom: 1.1rem;
+      color: #3d2e1e;
+    }
+
+    a {
+      color: #a16538;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.05rem 0.15rem;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    a:hover {
+      background: #eddac3;
+      color: #592f14;
+    }
+
+    /* 链接按钮风格 —— 圆角、暖色背景 */
+    .link-btn {
+      display: inline-block;
+      background: #f7e5d2;
+      color: #4f3621;
+      padding: 0.6rem 1.6rem;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border: 1px solid #e2c9ae;
+      transition: all 0.2s;
+      margin: 0.2rem 0;
+    }
+
+    .link-btn:hover {
+      background: #ebd1b7;
+      border-color: #b58b64;
+      color: #2f1f0f;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(170, 110, 40, 0.10);
+    }
+
+    /* 网格 / 目录感布局 */
+    .grid-directory {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.6rem;
+      margin: 1.8rem 0;
+    }
+
+    .dir-item {
+      background: #fffcf8;
+      border-radius: 24px;
+      padding: 1.4rem 1.2rem;
+      border: 1px solid #efddcc;
+      transition: background 0.15s;
+    }
+
+    .dir-item:hover {
+      background: #faf1e6;
+    }
+
+    .dir-item .tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      background: #ddc7b0;
+      color: #3c2b1b;
+      padding: 0.2rem 0.9rem;
+      border-radius: 40px;
+      margin-bottom: 0.8rem;
+    }
+
+    /* 提示区 */
+    .tip-area {
+      background: #fbf1e6;
+      border-left: 5px solid #c49b73;
+      padding: 1rem 1.8rem;
+      border-radius: 30px;
+      margin-top: 0.6rem;
+    }
+
+    .tip-area p {
+      margin-bottom: 0.2rem;
+    }
+
+    /* FAQ 摘要卡片 */
+    .faq-mini {
+      margin-top: 2rem;
+    }
+
+    .faq-row {
+      border-bottom: 1px dashed #e5cfbb;
+      padding: 1rem 0;
+    }
+
+    .faq-row:last-child {
+      border-bottom: none;
+    }
+
+    .faq-row summary {
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0.2rem 0;
+      list-style: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .faq-row summary::before {
+      content: "﹖";
+      margin-right: 0.8rem;
+      color: #aa7d58;
+      font-weight: 600;
+    }
+
+    .faq-row p {
+      margin: 0.6rem 0 0 1.8rem;
+    }
+
+    /* 相关信息区 */
+    .info-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .info-links span {
+      color: #7d623e;
+      font-size: 0.95rem;
+    }
+
+    .footer-note {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #826a4b;
+      border-top: 1px solid #e4cfb9;
+      padding-top: 1.8rem;
+    }
+
+    /* 响应式细节 */
+    @media (max-width: 640px) {
+      .card {
+        padding: 1.6rem 1.2rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.4rem;
+      }
+      .grid-directory {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- Hero / 标题区域 -->
+  <div class="card" style="text-align: center; padding-bottom: 2rem;">
+    <h1>📖 开元 · 知识库</h1>
+    <p style="font-size: 1.1rem; max-width: 540px; margin: 0.2rem auto 1rem auto;">
+      再次光临，收藏不迷路 · 持续关注，慢慢了解
+    </p>
+    <div style="margin-top: 0.8rem;">
+      <a href="https://cn-ssl-kaiyuan.com" class="link-btn">开元棋牌</a>
+    </div>
+    <p style="margin-top: 1.2rem; font-size: 0.95rem; color: #6b543b;">
+      这里是关于 <a href="https://cn-ssl-kaiyuan.com">开元棋牌</a> 的信息整理与常用指引。
+    </p>
+  </div>
+
+  <!-- 目录感布局：知识分类卡片 -->
+  <div class="card">
+    <h2>📂 内容目录</h2>
+    <div class="grid-directory">
+      <div class="dir-item">
+        <span class="tag">常见问题</span>
+        <h3>🎲 规则与玩法</h3>
+        <p style="margin-bottom: 0;">了解基本游戏机制、术语对照，适合刚接触的朋友。</p>
+      </div>
+      <div class="dir-item">
+        <span class="tag">操作指南</span>
+        <h3>🖥️ 平台与设备</h3>
+        <p style="margin-bottom: 0;">网页访问、移动端适配、收藏方式，随时重回桌面。</p>
+      </div>
+      <div class="dir-item">
+        <span class="tag">经验分享</span>
+        <h3>🧩 持续关注</h3>
+        <p style="margin-bottom: 0;">从哪里获取更新，如何保持消息灵通。</p>
+      </div>
+      <div class="dir-item">
+        <span class="tag">更多资源</span>
+        <h3>🔖 相关链接</h3>
+        <p style="margin-bottom: 0;">社区讨论、帮助中心以及备用路径。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 说明区：再次访问、收藏、持续关注 -->
+  <div class="card">
+    <h2>🗂️ 再次访问 · 收藏 · 关注</h2>
+    <p>
+      很多时候我们偶然发现一个合心意的地方，转头却忘了怎么回去。若想再次来到 
+      <a href="https://cn-ssl-kaiyuan.com">开元棋牌</a>，最直接的方式就是把页面加入浏览器书签，
+      或者在手机主屏幕创建快捷方式。这样下次只需轻点一下，就能回到熟悉的位置。
+    </p>
+    <p>
+      另外也可以记住这个域名：<strong>cn-ssl-kaiyuan.com</strong> —— 它结构简短，
+      直接在地址栏输入也方便。如果你习惯使用搜索，输入“开元棋牌 知识库”通常也能快速定位。
+    </p>
+    <p>
+      持续关注方面，我们建议隔段时间回来看看页面是否有内容更新，
+      或者留意社区里关于 <a href="https://cn-ssl-kaiyuan.com">开元棋牌</a> 的讨论。
+      保持一种悠闲的节奏，不必心急，好东西值得慢慢品。
+    </p>
+
+    <!-- 提示区 -->
+    <div class="tip-area">
+      <p>💡 <strong>小提示：</strong> 如果发现页面加载异常或链接失效，可以尝试清除浏览器缓存，
+      或换一个网络环境再试。大部分情况下，稍等片刻就会恢复正常。</p>
+    </div>
+  </div>
+
+  <!-- 相关信息区 + FAQ 摘要 -->
+  <div class="card">
+    <h2>🔍 相关信息 & FAQ 摘要</h2>
+
+    <div class="faq-mini">
+      <div class="faq-row">
+        <summary>开元棋牌 是什么类型的平台？</summary>
+        <p>它主要是围绕棋牌类休闲游戏提供在线服务的网站，
+        涵盖多种常见玩法，界面偏向简洁实用。想深入了解可以到 
+        <a href="https://cn-ssl-kaiyuan.com">开元棋牌</a> 上看一看。</p>
+      </div>
+      <div class="faq-row">
+        <summary>是否需要注册或下载？</summary>
+        <p>大部分功能通过浏览器即开即用，无需额外安装。
+        部分服务可能需要简单注册，具体以页面提示为准。</p>
+      </div>
+      <div class="faq-row">
+        <summary>如何收藏这个页面？</summary>
+        <p>在桌面浏览器按 <kbd>Ctrl+D</kbd> (Windows) 或 <kbd>⌘D</kbd> (Mac)，
+        手机浏览器一般通过菜单里的“添加书签”或“添加到主屏幕”完成。</p>
+      </div>
+    </div>
+
+    <div class="info-links">
+      <span>🔗 常用资源：</span>
+      <a href="https://cn-ssl-kaiyuan.com" class="link-btn" style="padding: 0.3rem 1.2rem;">开元棋牌</a>
+    </div>
+    <p style="margin-top: 1.4rem; font-size: 0.95rem; color: #6e553b;">
+      如果你有其他疑问，欢迎在相关社区交流，或直接访问 
+      <a href="https://cn-ssl-kaiyuan.com">开元棋牌</a> 了解更多细节。
+    </p>
+  </div>
+
+  <!-- 底部 -->
+  <div class="footer-note">
+    <p>知识库入口 · 内容仅供信息参考 · 保持好奇，适度探索</p>
+  </div>
+
+</div>
+</body>
+</html>
